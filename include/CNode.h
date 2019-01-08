@@ -18,6 +18,9 @@ protected:
 	int _area;
 	int _highest;
 
+public:
+	std::vector<CNode*> _children;
+
 	// methods
 public:
 	// ctor
