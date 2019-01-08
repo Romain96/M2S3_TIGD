@@ -52,4 +52,15 @@ void Pixel::setValue(unsigned char value)
     _value = value;
 }
 
+// operatorr overloading
+bool Pixel::operator== (Pixel p)
+{
+    return (p.getX() == this->getX()) && (p.getY() == this->getY());
+}
+
+bool Pixel::operator!= (Pixel p)
+{
+    return (p.getX() != this->getX()) || (p.getY() != this->getY());
+}
+
 #endif

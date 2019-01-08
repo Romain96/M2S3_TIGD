@@ -32,6 +32,10 @@ public:
     void setX(unsigned char x);
     void setY(unsigned char y);
     void setValue(unsigned char value);
+
+    // operators overloading
+    bool operator== (Pixel p);
+    bool operator!= (Pixel p);
 };
 
 #include "../src/Pixel.hxx"
