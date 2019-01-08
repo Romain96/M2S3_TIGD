@@ -9,6 +9,7 @@
  * 2018-2019
  */
 
+#include "../include/Pixel.h"
 #include <vector>
 
 // class UFDSet : Tarjan's Union-Find algorithm
@@ -21,23 +22,28 @@ protected:
 	std::vector<int> _parents;
 	// storing ranks as a global array
 	std::vector<int> _ranks;
+	// storing pixels
+	std::vector<Pixel> _pixels;
 
-	// thus the element x is implicit : it is the index
+	// image width used to compute indices
+	unsigned int _width;
 
 	// methods
 public:
 	// ctor
 	UFDSet() = delete;
-	UFDSet(size_t size);
+	UFDSet(size_t size, unsigned int width);
 
 	// methods
-	void makeSet(int x);
-	int find(int x);
-	int link(int x, int y);
+	void makeSet(Pixel x);
+	Pixel find(Pixel x);
+	Pixel link(Pixel x, Pixel y);
+
+	// debug
+	void selfDisplay();
 
 };
 
 #include "../src/UFDSet.hxx"
 
 #endif
-
