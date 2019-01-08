@@ -15,7 +15,8 @@
 CNode::CNode(int level) :
 	_level(level),
 	_area(1),
-	_highest(level)
+	_highest(level),
+	_children(0)
 {
 	// nothing
 }
