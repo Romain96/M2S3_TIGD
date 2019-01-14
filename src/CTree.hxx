@@ -18,15 +18,17 @@ using namespace LibTIM;
 
 // constructor
 // size : size of the image (number of pixels)
-CTree::CTree(Image<U8>& img) :
+CTree::CTree(Image<U8>& img, unsigned int size, unsigned int width) :
 	_img(img),
-	_size(img.getSizeX()*img.getSizeY()),
-	_width(img.getSizeX()),
+	_size(size),
+	_width(width),
 	_root(nullptr),
-	_nodes(_size,nullptr),
-	_m(_size),
-	_unodes(_size, _width),
-	_utrees(_size, _width)
+	_nodes(size, nullptr),
+	_m(size),
+	_lowestNode(size),
+	_unodes(size, width),
+	_utrees(size, width),
+	_alreadyProcessed(size, false)
 {
 	// nothing
 }
@@ -52,18 +54,45 @@ void CTree::buildComponentTree()
 	{
 		for (unsigned short j = 0; j < _img.getSizeY(); j++)
 		{
+			Pixel p(i,j,_img(i,j));
+
+			// adding to the ordered queue
 			pixels.push(Pixel(i, j, _img(i,j)));
+
+			// for each pixel :
+			// MakeSet(tree) of P
+			// MakeSet(node) of P
+			// nodes[P] = MakeNode(F(P))
+			// lowestNode[P] = P
+			_utrees.makeSet(p);
+			_unodes.makeSet(p);
+			_nodes[i * _width + j] = __makeNode(p.getValue());
+			_lowestNode[i * _width + j] = p;
 		}
 	}
 
-	std::cout << "pixels size : " << pixels.size() << std::endl;
+	// for each P in decreasing order of intensity
+	while (!pixels.empty())
+	{
+		Pixel p = pixels.top();
+		pixels.pop();
+
+		Pixel curTree = _utrees.find(p);
+		Pixel curNode = _unodes.find(_lowestNode[curTree.getX() * _width + curTree.getY()]);
+
+		// retrieving all already processed neighbours of p with intensity lower of equal to p
+		std::vector<Pixel> neighbours = __findAlreadyProcessedNeighboursLE(p);
+
+		// p has been processed
+		_alreadyProcessed[p.getX() * _width + p.getY()] = true;
+	}
 
 }
 
 // internal method : make node
-CNode CTree::__makeNode(int level)
+CNode* CTree::__makeNode(int level)
 {
-	return CNode(level);
+	return new CNode(level);
 }
 
 // internal method : merge nodes
@@ -103,6 +132,50 @@ Pixel CTree::__mergeNodes(Pixel node1, Pixel node2)
 			_nodes[tmpNode2.getX() * _width + tmpNode2.getY()]->getHighest()));
 
 	return tmpNode;
+}
+
+// returns a list of all already processed neighbours of a pixel p
+// with lower of equal intensity using the 8-connexity
+std::vector<Pixel> CTree::__findAlreadyProcessedNeighboursLE(Pixel p)
+{
+	std::vector<Pixel> res;
+	unsigned short x = p.getX();
+	unsigned short y = p.getY();
+	unsigned char value = p.getValue();
+
+	// adding top left corner
+	if (x != 0 && y != 0 && _alreadyProcessed[x-1,y-1] && _img(x-1,y-1) >= value)
+		res.push_back(Pixel(x-1, y-1, _img(x-1, y-1)));
+
+	// adding top right corner
+	if (x != _img.getSizeX()-1 && y != 0 && _alreadyProcessed[x+1,y-1] && _img(x+1,y-1) >= value)
+		res.push_back(Pixel(x+1, y-1, _img(x+1, y-1)));
+
+	// adding bottom left corner
+	if (x != 0 && y != _img.getSizeY()-1 && _alreadyProcessed[x-1,y+1] && _img(x-1,y+1) >= value)
+		res.push_back(Pixel(x-1, y+1, _img(x-1, y+1)));
+
+	// adding bottom right corner
+	if (x != _img.getSizeX()-1 && y != _img.getSizeY()-1 && _alreadyProcessed[x+1,y+1] && _img(x+1,y+1) >= value)
+		res.push_back(Pixel(x+1, y+1, _img(x+1, y+1)));
+
+	// adding top pixel
+	if (y != 0  && _alreadyProcessed[x,y-1] && _img(x,y-1) >= value)
+		res.push_back(Pixel(x, y-1, _img(x, y-1)));
+
+	// adding bottom pixel
+	if (y != _img.getSizeY()-1 && _alreadyProcessed[x,y+1] && _img(x,y+1) >= value)
+		res.push_back(Pixel(x, y+1, _img(x, y+1)));
+
+	// adding left pixel
+	if (x != 0 && _alreadyProcessed[x-1,y] && _img(x-1,y) >= value)
+		res.push_back(Pixel(x-1, y, _img(x-1, y)));
+
+	// adding right pixel
+	if (y != 0 && _alreadyProcessed[x+1,y] && _img(x+1,y) >= value)
+		res.push_back(Pixel(x+1, y, _img(x+1, y)));
+
+	return res;
 }
 
 #endif

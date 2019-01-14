@@ -24,8 +24,8 @@ class CTree
 	// attributes
 protected:
 	Image<U8> _img;
-	unsigned short _size;
-	unsigned short _width;
+	unsigned int _size;
+	unsigned int _width;
 
 	CNode *_root;
 	std::vector<CNode*> _nodes;
@@ -34,7 +34,7 @@ protected:
 	std::vector<int> _m;
 
 	// lowestNode
-	std::vector<int> _lowestNode;
+	std::vector<Pixel> _lowestNode;
 
 	// Disjoined Set for nodes
 	UFDSet _unodes;
@@ -42,17 +42,21 @@ protected:
 	// Disjoined Set for trees
 	UFDSet _utrees;
 
+	// already processed pixels
+	std::vector<bool> _alreadyProcessed;
+
 	// methods
 public:
 	CTree() = delete;
-	CTree(Image<U8>& img);
+	CTree(Image<U8>& img, unsigned int size, unsigned int width);
 
 	// building the component tree
 	void buildComponentTree();
 
 	// internal methods
-	CNode __makeNode(int level);
+	CNode* __makeNode(int level);
 	Pixel __mergeNodes(Pixel node1, Pixel node2);
+	std::vector<Pixel> __findAlreadyProcessedNeighboursLE(Pixel p);
 
 };
 

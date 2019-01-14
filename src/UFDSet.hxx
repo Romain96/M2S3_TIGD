@@ -11,7 +11,6 @@
 
 #include "../include/UFDSet.h"
 
-
 // ctor
 UFDSet::UFDSet(size_t size, unsigned int width) :
 	_parents(size),
