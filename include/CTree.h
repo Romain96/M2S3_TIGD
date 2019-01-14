@@ -15,6 +15,8 @@
 #include "../libtim/Common/Image.h"
 
 #include <vector>
+#include <map>
+#include <string>
 
 using namespace LibTIM;
 
@@ -24,39 +26,30 @@ class CTree
 	// attributes
 protected:
 	Image<U8> _img;
-	unsigned int _size;
-	unsigned int _width;
 
-	CNode *_root;
+	CNode* _root;
 	std::vector<CNode*> _nodes;
-
-	// Component mapping
-	std::vector<int> _m;
-
-	// lowestNode
-	std::vector<Pixel> _lowestNode;
-
-	// Disjoined Set for nodes
+	std::vector<int> _componentMapping;
+	std::vector<int> _lowestNode;
 	UFDSet _unodes;
-
-	// Disjoined Set for trees
 	UFDSet _utrees;
-
-	// already processed pixels
-	std::vector<bool> _alreadyProcessed;
 
 	// methods
 public:
 	CTree() = delete;
-	CTree(Image<U8>& img, unsigned int size, unsigned int width);
+	CTree(Image<U8>& img);
 
 	// building the component tree
 	void buildComponentTree();
 
+	// writing the result in a DOT file
+	void saveDOT(std::string filename);
+
 	// internal methods
 	CNode* __makeNode(int level);
-	Pixel __mergeNodes(Pixel node1, Pixel node2);
-	std::vector<Pixel> __findAlreadyProcessedNeighboursLE(Pixel p);
+	unsigned int __mergeNodes(unsigned int node1, unsigned int node2);
+	std::vector<Pixel> __findAlreadyProcessedNeighboursLE(Pixel p, std::map<unsigned int, bool>& list);
+	void __print(CNode *node);
 
 };
 

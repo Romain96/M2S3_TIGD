@@ -12,7 +12,7 @@ Pixel::Pixel() :
     // nothing
 }
 
-Pixel::Pixel(unsigned short x, unsigned short y, unsigned char value) :
+Pixel::Pixel(unsigned int x, unsigned int y, unsigned char value) :
     _x(x),
     _y(y),
     _value(value)
@@ -21,12 +21,12 @@ Pixel::Pixel(unsigned short x, unsigned short y, unsigned char value) :
 }
 
 // getters
-unsigned short Pixel::getX()
+unsigned int Pixel::getX()
 {
     return _x;
 }
 
-unsigned short Pixel::getY()
+unsigned int Pixel::getY()
 {
     return _y;
 }
@@ -37,12 +37,12 @@ unsigned char Pixel::getValue()
 }
 
 // setters
-void Pixel::setX(unsigned short x)
+void Pixel::setX(unsigned int x)
 {
     _x = x;
 }
 
-void Pixel::setY(unsigned short y)
+void Pixel::setY(unsigned int y)
 {
     _y = y;
 }

@@ -14,23 +14,23 @@ class Pixel
 {
     // attributes
 protected:
-    unsigned short _x;
-    unsigned short _y;
+    unsigned int _x;
+    unsigned int _y;
     unsigned char _value;
 
     // methods
 public:
     Pixel();
-    Pixel(unsigned short x, unsigned short y, unsigned char value);
+    Pixel(unsigned int x, unsigned int y, unsigned char value);
 
     // getters
-    unsigned short getX();
-    unsigned short getY();
+    unsigned int getX();
+    unsigned int getY();
     unsigned char getValue();
 
     // setters
-    void setX(unsigned short x);
-    void setY(unsigned short y);
+    void setX(unsigned int x);
+    void setY(unsigned int y);
     void setValue(unsigned char value);
 
     // operators overloading

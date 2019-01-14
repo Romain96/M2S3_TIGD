@@ -36,9 +36,11 @@ public:
 	void setLevel(int level);
 	void setArea(int area);
 	void setHighest(int highest);
+
+	// method
+	void addChild(CNode *node);
 };
 
 #include "../src/CNode.hxx"
 
 #endif
-

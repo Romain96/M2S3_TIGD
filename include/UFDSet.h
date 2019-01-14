@@ -22,22 +22,17 @@ protected:
 	std::vector<int> _parents;
 	// storing ranks as a global array
 	std::vector<int> _ranks;
-	// storing pixels
-	std::vector<Pixel> _pixels;
-
-	// image width used to compute indices
-	unsigned int _width;
 
 	// methods
 public:
 	// ctor
 	UFDSet() = delete;
-	UFDSet(size_t size, unsigned int width);
+	UFDSet(size_t size);
 
 	// methods
-	void makeSet(Pixel x);
-	Pixel find(Pixel x);
-	Pixel link(Pixel x, Pixel y);
+	void makeSet(int x);
+	int find(int x);
+	int link(int x, int y);
 
 	// debug
 	void selfDisplay();

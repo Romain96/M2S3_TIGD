@@ -12,58 +12,50 @@
 #include "../include/UFDSet.h"
 
 // ctor
-UFDSet::UFDSet(size_t size, unsigned int width) :
+UFDSet::UFDSet(size_t size) :
 	_parents(size),
-	_ranks(size),
-	_pixels(size),
-	_width(width)
+	_ranks(size)
 {
 	// nothing
 }
 
 // methods (Tarjan's union-find)
-void UFDSet::makeSet(Pixel x)
+void UFDSet::makeSet(int x)
 {
-	_pixels[x.getX() * _width + x.getY()] = x;
-	_parents[x.getX() * _width + x.getY()] = x.getX() * _width + x.getY();
-	_ranks[x.getX() * _width + x.getY()] = 0;
+	_parents[x] = x;
+	_ranks[x] = 0;
 }
-
-Pixel UFDSet::find(Pixel x)
+#include <iostream>
+int UFDSet::find(int x)
 {
-	if (x.getX() * _width + x.getY() == _parents[x.getX() * _width + x.getY()])
-		return x;
-	return find(_pixels[_parents[x.getX() * _width + x.getY()]]);
-}
-
-Pixel UFDSet::link(Pixel x, Pixel y)
-{
-	// find canonical element
-	x = find(x);
-	y = find(y);
-
-	if (x != y)
+	//std::cout << "\tfind : " << x << ", parent : " << _parents[x] << std::endl;
+	if (_parents[x] != x)
 	{
-		if (_ranks[x.getX() * _width + x.getY()] < _ranks[y.getX() * _width + y.getY()])
-		{
-			// swapping all three buffers (_pixels, _ranks, _parents)
-			_pixels[x.getX() * _width + x.getY()] = y;
-			_pixels[y.getX() * _width + y.getY()] = x;
-
-			int indexParent = _parents[x.getX() * _width + x.getY()];
-			_parents[x.getX() * _width + x.getY()] = _parents[y.getX() * _width + y.getY()];
-			_parents[y.getX() * _width + y.getY()] = indexParent;
-
-			int indexRank = _ranks[x.getX() * _width + x.getY()];
-			_ranks[x.getX() * _width + x.getY()] = _ranks[y.getX() * _width + y.getY()];
-			_ranks[y.getX() * _width + y.getY()] = indexRank;
-		}
-		_parents[y.getX() * _width + y.getY()] = x.getX() * _width + x.getY();
-		if (_ranks[x.getX() * _width + x.getY()] == _ranks[y.getX() * _width + y.getY()])
-		{
-			_ranks[x.getX() * _width + x.getY()]++;
-		}
+		_parents[x] = find(_parents[x]);
 	}
+	return _parents[x];
+}
+
+int UFDSet::link(int x, int y)
+{
+/*	if (_ranks[x] > _ranks[y])
+	{
+		int p = _parents[x];
+		_parents[x] = y;
+		_parents[y] = p;
+
+		int r = _ranks[x];
+		_ranks[x] = _ranks[y];
+		_ranks[y] = r;
+	}*/
+
+	if (_ranks[x] == _ranks[y])
+	{
+		_ranks[y] += 1;
+	}
+
+	_parents[x] = y;
+	return y;
 }
 
 #include <iostream>
@@ -71,17 +63,9 @@ Pixel UFDSet::link(Pixel x, Pixel y)
 // debug : self display all relations
 void UFDSet::selfDisplay()
 {
-	for (int i = 0; i < _pixels.size(); i++)
+	for (int i = 0; i < _parents.size(); i++)
 	{
-		std::cout << "Pixel " << i << " : ("
-		<< static_cast<int>(_pixels[i].getX()) << ","
-		<< static_cast<int>(_pixels[i].getY()) << ","
-		<< static_cast<int>(_pixels[i].getValue())
-		<< ") : parent ("
-		<< static_cast<int>(_pixels[_parents[i]].getX()) << ","
-		<< static_cast<int>(_pixels[_parents[i]].getY()) << ","
-		<< static_cast<int>(_pixels[_parents[i]].getValue())
-		<< ") rank = " << _ranks[i] << std::endl;
+		std::cout << "Pixel " << i << ", parent : " << _parents[i] << ", rank : " << _ranks[i] << std::endl;
 	}
 }
 

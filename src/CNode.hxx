@@ -53,4 +53,9 @@ void CNode::setHighest(int highest)
 	_highest = highest;
 }
 
+void CNode::addChild(CNode *node)
+{
+	_children.push_back(node);
+}
+
 #endif
