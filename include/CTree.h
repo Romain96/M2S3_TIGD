@@ -11,14 +11,22 @@
 
 #include "../include/CNode.h"
 #include "../include/UFDSet.h"
+#include "../libtim/Common/Types.h"
+#include "../libtim/Common/Image.h"
 
 #include <vector>
 
-// Component tree class 
+using namespace LibTIM;
+
+// Component tree class
 class CTree
 {
 	// attributes
 protected:
+	Image<U8> _img;
+	unsigned short _size;
+	unsigned short _width;
+
 	CNode *_root;
 	std::vector<CNode*> _nodes;
 
@@ -37,14 +45,14 @@ protected:
 	// methods
 public:
 	CTree() = delete;
-	CTree(int size);
+	CTree(Image<U8>& img);
 
 	// building the component tree
 	void buildComponentTree();
 
 	// internal methods
 	CNode __makeNode(int level);
-	int __mergeNodes(int node1, int node2);
+	Pixel __mergeNodes(Pixel node1, Pixel node2);
 
 };
 

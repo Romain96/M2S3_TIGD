@@ -23,7 +23,7 @@
 // ----------------------------------
 
 #include <iostream>
-#include "Common/Types.h"
+#include "Types.h"
 
 namespace LibTIM {
 
