@@ -81,7 +81,7 @@ Il y a cependant un ajout qui a été nécessaire. Lorsqu'il faut traiter tous l
 q de p ayant déjà été traités et ayant une intensité supérieure ou égale à p, il est nécessaire
 de connaitre lesdits voisins de p !
 Ceci a été réalisé au moyen d'un tableau indexé sur les indices de pixels et contenant des booléens.
-Au départ tous les pixels sont initialisés à faux et lorqu'un pixel est traité (sorti hors de la file de priorité)
+Au départ tous les pixels sont initialisés à faux et lorsqu'un pixel est traité (sorti hors de la file de priorité)
 il est passé à vrai et pourra donc servir de voisin au pixel suivant (s'il est un voisin).
 
 ## Problèmes, limitations et résultats
