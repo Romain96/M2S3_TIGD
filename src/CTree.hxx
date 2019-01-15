@@ -104,7 +104,6 @@ void CTree::buildComponentTree()
 				if (_nodes[curNode]->getLevel() == _nodes[adjNode]->getLevel())
 				{
 					curNode = __mergeNodes(adjNode, curNode);
-					std::cout << "MERGE" << std::endl;
 				}
 				else
 				{
