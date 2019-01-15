@@ -156,13 +156,13 @@ void CTree::saveDOT(std::string filename)
 		{
 			// writing all father/son relations
 			outfile << "\t" << "\"ID : " << n->getID()
-				<< " level = " << n->getLevel()
-				<< ", area = " << n->getArea()
-				<< ", highest = " << n->getHighest()
+				<< "\\n level = " << n->getLevel()
+				<< "\\n area = " << n->getArea()
+				<< "\\n highest = " << n->getHighest()
 				<< "\" -> \"ID : " << (*it)->getID()
-				<< " level = " << (*it)->getLevel()
-				<< ", area = " << (*it)->getArea()
-				<< ", highest = " << (*it)->getHighest()
+				<< "\\n level = " << (*it)->getLevel()
+				<< "\\n area = " << (*it)->getArea()
+				<< "\\n highest = " << (*it)->getHighest()
 				<< "\";\n";
 
 			// and adding all sons to the queue to be processed afterwards
