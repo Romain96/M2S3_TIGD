@@ -47,7 +47,7 @@ public:
 
 	// internal methods
 	CNode* __makeNode(int level);
-	unsigned int __mergeNodes(unsigned int node1, unsigned int node2);
+	int __mergeNodes(int node1, int node2);
 	std::vector<Pixel> __findAlreadyProcessedNeighboursLE(Pixel p, std::map<unsigned int, bool>& list);
 	void __print(CNode *node);
 

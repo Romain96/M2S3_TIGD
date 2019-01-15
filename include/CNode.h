@@ -13,7 +13,10 @@
 class CNode
 {
 	// attributes
+private:
+	static int _cpt;
 protected:
+	int _id;
 	int _level;
 	int _area;
 	int _highest;
@@ -28,11 +31,13 @@ public:
 	CNode(int level);
 
 	// getters
+	int getID();
 	int getLevel();
 	int getArea();
 	int getHighest();
 
 	// setters
+	void setID(int id);
 	void setLevel(int level);
 	void setArea(int area);
 	void setHighest(int highest);

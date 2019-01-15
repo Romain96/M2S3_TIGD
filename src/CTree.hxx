@@ -22,16 +22,13 @@ using namespace LibTIM;
 CTree::CTree(Image<U8>& img) :
 	_img(img),
 	_root(nullptr),
-	_nodes(img.getSizeX() * img.getSizeY()),
+	_nodes(img.getSizeX() * img.getSizeY(),nullptr),
 	_componentMapping(img.getSizeX() * img.getSizeY()),
 	_lowestNode(img.getSizeX() * img.getSizeY()),
 	_unodes(img.getSizeX() * img.getSizeY()),
 	_utrees(img.getSizeX() * img.getSizeY())
 {
 	// nothing
-	std::cout << "_nodes : " << _nodes.size() << std::endl;
-	std::cout << "_componentMapping : " << _componentMapping.size() << std::endl;
-	std::cout << "_lowestNode : " << _lowestNode.size() << std::endl;
 }
 
 // custom Pixel comparator : criteria is on grey intensity
@@ -75,14 +72,12 @@ void CTree::buildComponentTree()
 			//std::cout << index << std::endl;
 			_utrees.makeSet(index);
 			_unodes.makeSet(index);
-			_nodes[index] = __makeNode(p.getValue());
+			_nodes[index] = __makeNode(static_cast<int>(p.getValue()));
 			_lowestNode[index] = index;
 
 			processed[index] = false;
 		}
 	}
-
-	std::cout << "processed size : " << processed.size() << std::endl;
 
 	// for each P in decreasing order of intensity
 	while (!pixels.empty())
@@ -109,6 +104,7 @@ void CTree::buildComponentTree()
 				if (_nodes[curNode]->getLevel() == _nodes[adjNode]->getLevel())
 				{
 					curNode = __mergeNodes(adjNode, curNode);
+					std::cout << "MERGE" << std::endl;
 				}
 				else
 				{
@@ -135,7 +131,7 @@ void CTree::buildComponentTree()
 		}
 	}
 
-	this->__print(this->_root);
+	//this->__print(this->_root);
 
 }
 
@@ -159,11 +155,12 @@ void CTree::saveDOT(std::string filename)
 		for (std::vector<CNode*>::iterator it = n->_children.begin(); it != n->_children.end(); it++)
 		{
 			// writing all father/son relations
-			outfile << "\t" << "\"level = " << n->getLevel()
+			outfile << "\t" << "\"ID : " << n->getID()
+				<< " level = " << n->getLevel()
 				<< ", area = " << n->getArea()
 				<< ", highest = " << n->getHighest()
-				<< "\" -> \""
-				<< "level = " << (*it)->getLevel()
+				<< "\" -> \"ID : " << (*it)->getID()
+				<< " level = " << (*it)->getLevel()
 				<< ", area = " << (*it)->getArea()
 				<< ", highest = " << (*it)->getHighest()
 				<< "\";\n";
@@ -197,10 +194,10 @@ CNode* CTree::__makeNode(int level)
 }
 
 // internal method : merge nodes
-unsigned int CTree::__mergeNodes(unsigned int node1, unsigned int node2)
+int CTree::__mergeNodes(int node1, int node2)
 {
-	unsigned int tmpNode = _unodes.link(node1, node2);
-	unsigned int tmpNode2;
+	int tmpNode = _unodes.link(node1, node2);
+	int tmpNode2;
 
 	if (tmpNode == node2)
 	{

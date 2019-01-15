@@ -11,6 +11,8 @@
 
 #include "../include/CNode.h"
 
+int CNode::_cpt = 0;
+
 // ctor
 CNode::CNode(int level) :
 	_level(level),
@@ -18,10 +20,16 @@ CNode::CNode(int level) :
 	_highest(level),
 	_children(0)
 {
-	// nothing
+	// unique ID
+	_id = _cpt++;
 }
 
 // getters
+int CNode::getID()
+{
+	return _id;
+}
+
 int CNode::getLevel()
 {
 	return _level;
@@ -38,6 +46,11 @@ int CNode::getHighest()
 }
 
 // setters
+void CNode::setID(int id)
+{
+	_id = id;
+}
+
 void CNode::setLevel(int level)
 {
 	_level = level;
