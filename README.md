@@ -60,4 +60,17 @@ dans lequel il se trouve.
 
 ## Documentation technique
 
+Nous avons commencé par définir une classe Pixel permettant de représenter les pixels
+de l'image traitée (assez similaire à la classe Point dans libtim).
+
+L'algorithme choisi utilisant la structure d'ensembles disjoints et l'algorithme
+"union-find" de Tarjan, nous avons mis en place une classe UFDSet (UnionFinDSet).
+Les pixels de l'image pouvant être linérisés et traités par un indice unique
+(i,j) -> j * largeur_image + i, cette structure n'a de fait pas besoin de contenir
+les pixels eux-mêmes.
+
+Les ensembles disjoints peuvent se contenter de travailler sur les entiers (indices)
+uniquement et donc les champs **parents** et **ranks** sont des tableaux. Il n'y a donc
+pas besoin de stocker explicitement des arbres disjoints mais seulement des entiers. 
+
 ## Problèmes, limitations et résultats
