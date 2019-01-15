@@ -26,6 +26,7 @@ auteurs :
 ## Documentation utilisateur
 
 Le projet a été développé en C++.
+
 Un makefile est fourni pour le compiler.
 
 `make` ou `make componentTree`
@@ -47,6 +48,15 @@ et sauvegardera le résultat dans un fichier nommé **graphs/lena.dot**.
 L'algorithme implémenté ici est l'algorithme de calcul de l'arbre des coupes d'une
 image en niveaux de gris proposé par L.Najman et M.Couprie :
 "Building the component tree in quasi-linear time", L.Najman & M.Couprie
+
+L'algorithme consiste à traiter les pixels de l'image dans l'ordre décroissant
+de leur intensité. On maintient une deux structures d'ensembles disjoints en
+utilisant l'algorithme "union-find" proposé par Tarjan, une concernant les noeuds
+et une autre concernant les arbres. Ces deux structures permettent de fusioner les
+zone de l'image contenant des pixels de même intensité et étant liés par une relation
+de voisinage (ces pixels font partie de la même composante connexe).
+Un dernier passage est nécessaire afin d'attribuer à chaque pixel, le noeud de l'arbre
+dans lequel il se trouve.
 
 ## Documentation technique
 
