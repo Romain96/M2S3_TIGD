@@ -1,4 +1,4 @@
-# Traitement d'Images et Géométrie Discrète
+# TIGD: Building the component tree in quasi-linear time
 
 ## Organisation
 
