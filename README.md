@@ -23,6 +23,25 @@ auteurs :
 | src | CTree.hxx | Code de la classe CTree |
 | graphs | * | Graphes (arbres des coupes) générés au format dot |
 
+## Documentation utilisateur
+
+Le projet a été développé en C++.
+Un makefile est fourni pour le compiler.
+
+`make` ou `make componentTree`
+
+Le programme attends deux paramètres :
+- une image binaire PGM à traiter
+- un nom de fichier DOT pour sauvegarder le résultat
+
+Quelques images sont founies dans le répertoire **images** et par défaut
+les images sont recherchées dans ce répertoire.
+Les résultats (l'arbre des coupes) sera sauvegardé au format DOT dans le répertoire
+**graphs** avec le nom donné en paramètre.
+
+Par exemple `./componentTree lena.pgm lena.dot` traitera l'image **images/lena.pgm**
+et sauvegardera le résultat dans un fichier nommé **graphs/lena.dot**.
+
 ## Documentation scientifique
 
 L'algorithme implémenté ici est l'algorithme de calcul de l'arbre des coupes d'une
