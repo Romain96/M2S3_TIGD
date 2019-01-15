@@ -261,7 +261,7 @@ std::vector<Pixel> CTree::__findAlreadyProcessedNeighboursLE(Pixel p, std::map<u
 		res.push_back(Pixel(x-1, y, _img(x-1, y)));
 
 	// adding right pixel
-	if (y != 0 && list[x+1,y] && _img(x+1,y) >= value)
+	if (x != _img.getSizeX()-1 && list[x+1,y] && _img(x+1,y) >= value)
 		res.push_back(Pixel(x+1, y, _img(x+1, y)));
 
 	return res;
