@@ -12,7 +12,7 @@ using namespace LibTIM;
 int main()
 {
 	Image<U8> img;
-	img.load("test.pgm", img);
+	img.load("buffalo.pgm", img);
 
 	CTree ct(img);
 	ct.buildComponentTree();

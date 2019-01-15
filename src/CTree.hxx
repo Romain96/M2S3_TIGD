@@ -62,7 +62,7 @@ void CTree::buildComponentTree()
 		for (int j = 0; j < _img.getSizeY(); j++)
 		{
 			Pixel p(i,j,_img(i,j));
-			int index = i * width + j;
+			int index = j * width + i;
 
 			// adding to the ordered queue
 			pixels.push(Pixel(i, j, _img(i,j)));
@@ -89,7 +89,7 @@ void CTree::buildComponentTree()
 	{
 		Pixel p = pixels.top();
 		pixels.pop();
-		int index = p.getX() * width + p.getY();
+		int index = p.getY() * width + p.getX();
 
 		processed[index] = true;
 
@@ -101,7 +101,7 @@ void CTree::buildComponentTree()
 
 		for (std::vector<Pixel>::iterator it = neighbours.begin(); it != neighbours.end(); it++)
 		{
-			int adjTree = _utrees.find((*it).getX() * width + (*it).getY());
+			int adjTree = _utrees.find((*it).getY() * width + (*it).getX());
 			int adjNode = _unodes.find(_lowestNode[adjTree]);
 
 			if (curNode != adjNode)
@@ -131,7 +131,7 @@ void CTree::buildComponentTree()
 	{
 		for (int j = 0; j < _img.getSizeY(); j++)
 		{
-			_componentMapping[i * width + j] = _unodes.find(i * width + j);
+			_componentMapping[j * width + i] = _unodes.find(j * width + i);
 		}
 	}
 
