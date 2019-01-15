@@ -228,8 +228,8 @@ int CTree::__mergeNodes(int node1, int node2)
 std::vector<Pixel> CTree::__findAlreadyProcessedNeighboursLE(Pixel p, std::map<unsigned int, bool>& list)
 {
 	std::vector<Pixel> res;
-	unsigned short x = p.getX();
-	unsigned short y = p.getY();
+	unsigned int x = p.getX();
+	unsigned int y = p.getY();
 	unsigned char value = p.getValue();
 
 	// adding top left corner
