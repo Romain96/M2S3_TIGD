@@ -23,6 +23,12 @@ auteurs :
 | src | CTree.hxx | Code de la classe CTree |
 | graphs | * | Graphes (arbres des coupes) générés au format dot |
 
-## Algorithme
+## Documentation scientifique
 
+L'algorithme implémenté ici est l'algorithme de calcul de l'arbre des coupes d'une
+image en niveaux de gris proposé par L.Najman et M.Couprie :
 "Building the component tree in quasi-linear time", L.Najman & M.Couprie
+
+## Documentation technique
+
+## Problèmes, limitations et résultats
