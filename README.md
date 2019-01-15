@@ -71,6 +71,17 @@ les pixels eux-mêmes.
 
 Les ensembles disjoints peuvent se contenter de travailler sur les entiers (indices)
 uniquement et donc les champs **parents** et **ranks** sont des tableaux. Il n'y a donc
-pas besoin de stocker explicitement des arbres disjoints mais seulement des entiers. 
+pas besoin de stocker explicitement des arbres disjoints mais seulement des entiers.
+
+Avec ces structures, l'algorithme décrit dans l'article peut être implémenté
+quasiment au mot près. Les pixels sont triés dans l'ordre décroissant de leur intensité
+au moyen d'une file de priorité sur les pixels.
+
+Il y a cependant un ajout qui a été nécessaire. Lorsqu'il faut traiter tous les voisins
+q de p ayant déjà été traités et ayant une intensité supérieure ou égale à p, il est nécessaire
+de connaitre lesdits voisins de p !
+Ceci a été réalisé au moyen d'un tableau indexé sur les indices de pixels et contenant des booléens.
+Au départ tous les pixels sont initialisés à faux et lorqu'un pixel est traité (sorti hors de la file de priorité)
+il est passé à vrai et pourra donc servir de voisin au pixel suivant (s'il est un voisin).
 
 ## Problèmes, limitations et résultats
