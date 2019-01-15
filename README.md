@@ -85,3 +85,23 @@ Au départ tous les pixels sont initialisés à faux et lorsqu'un pixel est trai
 il est passé à vrai et pourra donc servir de voisin au pixel suivant (s'il est un voisin).
 
 ## Problèmes, limitations et résultats
+
+Auparavant le programme s'arrêtait à cause de segfault.
+Après investigation, il s'est avéré que la fonction **find** dans les **UFDSet**
+provoquait des appels récursifs intriqués : parent de a valait b donc on cherchait
+parent de b qui valait a et ainsi de suite jusqu'à submerger le pile d'appels et
+provoquer un *stack overflow*.
+
+Une solution temporaire a été de supprimer l'échange de a et b quand les rangs sont égaux.
+Les arbres (ensembles) disjoints ne sont de fait plus équilibrés.
+Note: la compression de chemin et l'union par rang sont toujours effectuées.
+Cette solution est malheureusement toujours d'actualité.
+
+Le deuxième problème relevé est que le résultat (l'arbre des coupes) obtenu comporte
+tout un tas de noeuds avec une area de 1 (correspondant dont à des pixels isolés).
+Sauf que les images utilisées n'avaient pas de pixels isolés...il s'agit donc de noeuds
+qui ne devrait pas figurer dans l'arbre des coupes final. Les noeuds devant y figurer (area > 1)
+eux s'y trouvent. C'est d'autant plus troublant que sur l'image **example.pgm** le résultat
+n'implique pas les noeuds de pixels isolés mais sur l'image **test2_100_100.pgm** c'est tout
+le contraire alors que ces deux images ont été fabriquées (avec Gimp) et ne contiennent que
+des zones plates...
