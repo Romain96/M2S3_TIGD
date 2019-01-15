@@ -1,6 +1,8 @@
 # Traitement d'Images et Géométrie Discrète
 
-# Organisation
+## Organisation
+
+auteurs :
 
 * Romain Perrin <romain.perrin@etu.unistra.fr>
 * Maxime Seyer <maxime.seyer@etu.unistra.fr>
@@ -15,7 +17,12 @@
 | include | UFDSet.h | Classe UFDSet représentant des ensembles disjoints (algo union-find de Tarjan) |
 | include | CNode.h | Classe CNode représentant un noeud de l'arbre des coupes |
 | include | CTree.h | Classe CTree représentant l'arbre des coupes |
+| src | Pixel.hxx | Code de la classe Pixel |
+| src | UFDSet.hxx | Code de la classe UFDSet |
+| src | CNode.hxx | Code de la classe CNode |
+| src | CTree.hxx | Code de la classe CTree |
+| graphs | * | Graphes (arbres des coupes) générés au format dot |
 
-# Algorithme
+## Algorithme
 
 "Building the component tree in quasi-linear time", L.Najman & M.Couprie
